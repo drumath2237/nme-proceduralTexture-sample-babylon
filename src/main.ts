@@ -1,9 +1,9 @@
-import { Engine, Scene, MeshBuilder } from "@babylonjs/core";
-import "./style.scss";
+import { Engine, Scene, MeshBuilder } from '@babylonjs/core';
+import './style.scss';
 
 const main = () => {
   const renderCanvas = document.getElementById(
-    "renderCanvas"
+    'renderCanvas'
   ) as HTMLCanvasElement;
   if (!renderCanvas) {
     return;
@@ -17,7 +17,7 @@ const main = () => {
 
   scene.createDefaultCameraOrLight(true, true, true);
 
-  MeshBuilder.CreateBox("box", { size: 0.5 }, scene);
+  MeshBuilder.CreateBox('box', { size: 0.5 }, scene);
 
   engine.runRenderLoop(() => {
     scene.render();
