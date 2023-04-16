@@ -1,7 +1,12 @@
-import "./style.css";
+import "./style.scss";
 
 const main = () => {
-  console.log("Hello");
+  const renderCanvas = document.getElementById("renderCanvas");
+  if (!renderCanvas) {
+    return;
+  }
+
+  console.log("hello");
 };
 
 main();
