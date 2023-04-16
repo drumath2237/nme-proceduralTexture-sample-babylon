@@ -1,5 +1,14 @@
-import { Engine, Scene, MeshBuilder } from '@babylonjs/core';
+import {
+  Engine,
+  Scene,
+  MeshBuilder,
+  Effect,
+  CustomProceduralTexture,
+  Layer,
+} from '@babylonjs/core';
 import './style.scss';
+
+import backgroundShader from '../assets/customShader.frag?raw';
 
 const main = () => {
   const renderCanvas = document.getElementById(
@@ -17,7 +26,25 @@ const main = () => {
 
   scene.createDefaultCameraOrLight(true, true, true);
 
-  MeshBuilder.CreateBox('box', { size: 0.5 }, scene);
+  MeshBuilder.CreateBox('box', { size: 0.3 }, scene);
+
+  let time = 0;
+
+  Effect.ShadersStore['BackgroundPixelShader'] = backgroundShader;
+  const backgroundProceduralTexture = new CustomProceduralTexture(
+    'background procedural texture',
+    'Background',
+    { width: engine.getRenderWidth(), height: engine.getRenderHeight() },
+    scene
+  );
+  backgroundProceduralTexture.setFloat('u_TimeScaleFactor', 18.0);
+  const backgroundLayer = new Layer('background layer', null, scene, true);
+  backgroundLayer.texture = backgroundProceduralTexture;
+
+  scene.registerBeforeRender(() => {
+    time += engine.getDeltaTime() / 1000;
+    backgroundProceduralTexture.setFloat('u_Time', time);
+  });
 
   engine.runRenderLoop(() => {
     scene.render();
