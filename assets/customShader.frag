@@ -17,23 +17,24 @@ varying vec2 vPosition;
 //Entry point
 void main(void) {
 
-//Length
+    //Length
     float output3 = length(vPosition);
 
-//Add
+    //Add
     float output2 = output3 + u_Time;
 
-//Multiply
+    //Multiply
     float output1 = output2 * u_TimeScaleFactor;
 
-//Sin
+    //Sin
     float output0 = sin(output1);
 
-//VectorMerger
+    //VectorMerger
     vec3 xyz1 = vec3(output0, 0.0, output0).xyz;
 
-//FragmentOutput
+    //FragmentOutput
     gl_FragColor = vec4(xyz1, 1.0);
+    
 #ifdef CONVERTTOLINEAR0
     gl_FragColor = toLinearSpace(gl_FragColor);
 #endif
